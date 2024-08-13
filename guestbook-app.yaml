@@ -4,7 +4,7 @@ metadata:
   name: guestbook
 spec:
   destination:
-    namespace: argocd
+    namespace: gitapps
     server: https://kubernetes.default.svc
   project: webservers
   syncPolicy:
