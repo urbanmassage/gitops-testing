@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: {{ .Values.guestbook.appName }}
   namespace: gitapps
 spec:
-  replicas: 1
+  replicas: {{ .Values.guestbook.replicaCount }}
   selector:
     matchLabels:
       app: frontend 
