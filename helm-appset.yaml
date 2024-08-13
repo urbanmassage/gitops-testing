@@ -42,3 +42,6 @@ spec:
       destination:
         server: '{{.url}}'
         namespace: '{{.path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
