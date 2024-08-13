@@ -1,3 +1,2 @@
 guestbook:
-  appName: frontend
   replicaCount: 1
