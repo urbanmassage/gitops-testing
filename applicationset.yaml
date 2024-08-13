@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-addons
+  namespace: argocd
+spec:
+  generators:
+    # matrix 'parent' generator
+    - matrix:
+        generators:
+          # Git generator, 'child' #1
+          - git:
+              repoURL: https://github.com/urbanmassage/gitops-testing
+              revision: HEAD
+              directories:
+                - path: deploy/*
+          # cluster generator, 'child' #2
+          - list:
+              elements:
+                - cluster: urban-prod
+                  url: https://kubernetes.default.svc
+                  values:
+                    project: webservers
+                - cluster: urban-stag
+                  url: https://35.233.72.187
+                  values:
+                    project: webservers
+  template:
+    metadata:
+      name: '{{path.basename}}-{{name}}'
+    spec:
+      project: "webservers"
+      source:
+        repoURL: https://github.com/urbanmassage/gitops-testing
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: '{{server}}'
+        namespace: '{{.path.basename}}'
