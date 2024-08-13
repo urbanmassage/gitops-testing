@@ -4,8 +4,9 @@ metadata:
   name: cluster-addons
   namespace: argocd
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
-    # matrix 'parent' generator
     - matrix:
         generators:
           # Git generator, 'child' #1
@@ -27,13 +28,13 @@ spec:
                     project: webservers
   template:
     metadata:
-      name: '{{path.basename}}-{{name}}'
+      name: '{{.path.basename}}-{{.cluster}}'
     spec:
       project: "webservers"
       source:
         repoURL: https://github.com/urbanmassage/gitops-testing
         targetRevision: HEAD
-        path: '{{path}}'
+        path: '{{.path.path}}'
       destination:
-        server: '{{server}}'
+        server: '{{.url}}'
         namespace: '{{.path.basename}}'
