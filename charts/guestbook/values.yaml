@@ -1,3 +1,5 @@
 guestbook:
   appName: frontend
   replicaCount: 1
+  appVersion: 1.1
+  repository: phico/frontend
